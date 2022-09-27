@@ -8,42 +8,32 @@ import logoCosmos from '@/images/logos/cosmos.svg'
 import logoHelioStream from '@/images/logos/helio-stream.svg'
 import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
 import logoPlanetaria from '@/images/logos/planetaria.svg'
+import logoSwizzle from '@/images/logos/swizzle.png'
 
 const projects = [
   {
-    name: 'Planetaria',
+    name: 'Swizzle',
     description:
-      'Creating technology to empower civilians to explore space on their own terms.',
-    link: { href: 'http://planetaria.tech', label: 'planetaria.tech' },
-    logo: logoPlanetaria,
+      'Meetup app that allows each user to invite one friend to attend the event',
+    link: {
+      href: 'https://swizzleapp.vercel.app/',
+      label: 'swizzleapp.vercel.app',
+    },
+    logo: logoSwizzle,
   },
   {
-    name: 'Animaginary',
+    name: 'Roll-Call',
     description:
-      'High performance web animation library, hand-written in optimized WASM.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoAnimaginary,
-  },
-  {
-    name: 'HelioStream',
-    description:
-      'Real-time video streaming library, optimized for interstellar transmission.',
+      'An app that allows users to initiate roll-calls where users take selfies identifying their locations',
     link: { href: '#', label: 'github.com' },
     logo: logoHelioStream,
   },
   {
-    name: 'cosmOS',
+    name: 'TD Games',
     description:
-      'The operating system that powers our Planetaria space shuttles.',
+      'A gaming application where users can friend, chat, and play board games together in real-time',
     link: { href: '#', label: 'github.com' },
     logo: logoCosmos,
-  },
-  {
-    name: 'OpenShuttle',
-    description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoOpenShuttle,
   },
 ]
 
@@ -82,7 +72,7 @@ export default function Projects() {
                 <Image
                   src={project.logo}
                   alt=""
-                  className="h-8 w-8"
+                  className="h-8 w-8 rounded-full"
                   unoptimized
                 />
               </div>

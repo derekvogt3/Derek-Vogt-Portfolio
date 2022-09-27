@@ -1,0 +1,79 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/future/image'
+import csrOne from './CSR-1.png'
+import csrTwo from './CSR-2.png'
+import ssrOne from './SSR-1.png'
+import ssgOne from './SSG-1.png'
+
+export const meta = {
+  author: 'Derek Vogt',
+  date: '2022-07-20',
+  title: 'CSR, SSR, vs SSG',
+  description: 'content here',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+As someone who’s used React for my last couple of projects, I decided to switch things up and learn a new development toolkit. Upon further research, Next.js seemed like the logical next step, but what does Next.js actually accomplish, and how does it differ from out-of-the-box React?
+
+The major difference between Next.js and React is how the application is rendered. Out-of-the-box React is entirely generated using Client Side Rendering (CSR), while Next.js uses Server Side Rendering (SSR) or Static Site Generation (SSG).
+
+So what is the difference between CSR, SSR, and SSG? let’s dive in below.
+
+## Client Side Rendering
+
+When a React application is sent from the server to the client, the only HTML that sends is the root HTML page without any page information. For example, when running “create-react-app” the index.html is sent below.
+
+<Image src={csrOne} alt="" />
+
+It’s not until the Javascript is sent to the client, that any relevant items actually appear on the page. If you were to disable Javascript on your browser, the page would just show blank.
+
+To further illustrate the CSR process, refer to the diagram below for how React Apps are sent to the browser.
+
+<Image src={csrTwo} alt="" />
+
+So why does this matter?
+
+There are a few disadvantages to web apps that use this approach. First, bots have a hard time crawling the information on your site. Many bots will look at the source HTML file to gather information, and if the root file is blank, the bots won’t be able to function properly. This poses potential problems when trying to optimize a website for search engines or Twitter bots.
+
+In addition, CSR applications are loaded completely when a page refreshes. If it’s a large application, it may take a while until users can actually begin interacting with your site. This can pose issues if users are using less powerful hardware or if you’re worried about users leaving your site after a few moments.
+
+The major benefit to CSR applications is once all the javascript is loaded, the site runs blazingly fast. The app works similar to a mobile application, with information being sent with APIs creating a dynamic experience.
+
+Finally, If you are looking to build an app that requires a login, with completely dynamic information being sent to the user, CSR applications are a great option. Think of Twitter or Instagram as an example, everyone sees something different after logging into these platforms so a static site would never work for this purpose.
+
+## Server Side Rendering
+
+As opposed the client rendering the application, in SSR applications the server compiles all of the Javascript files, creates an HTML page, and sends the HTML file to the client. Once after an initial HTML page is sent to the browser, React will perform its magic in creating an interactive application. Refer to the diagram below to see how SSR works.
+
+<Image src={ssrOne} alt="" />
+
+This is where Next.js comes in handy. Out-of-the-box, Next.js allows developers to create applications using React, but also get the benefits of SSR applications.
+
+Next.js allows for bots to understand the page contents, as HTML is initially direct sent to the client, improving search engine optimization. This is a win-win; bots are able to freely gather information about the page without sacrificing the user experience.
+
+One downside, however, is that each time the user navigates to a new page, the server needs to re-render the content. This can create a significant increase in server load, making server costs more expensive. There are always trade-offs with different technologies; better user experience or expensive server costs.
+
+Another downside is when a user navigates to a new page, it takes time to render the new page. This can harm the user experience if these load times are significant, especially if there is a fair amount of traffic to the site.
+
+## Static Site Generation
+
+The final type of page generation that Next.js supports is Static Site Generation (SSG). This differs significantly from CSR and SSR, as all HTML pages are created during the build/deployment of the site. If there is a database with 800 different objects each tied to a respective page, Next.js will create 800 separate pages hosted as a static site. Refer to the graphic below.
+
+<Image src={ssgOne} alt="" />
+
+The benefit of using Static Site Generation is speed and simplicity. Since no rendering occurs when users interact with the site, content is sent almost instantaneously. Yes, building the site takes a while, and it may take up significant storage space, but it’s the fastest option for users loading a page. From a hosting perspective, since the site now consists of only documents, and can be hosted completely from S3, without the complexity of managing a full server & backend.
+
+The downside to using Static Site Generation is the lack of user interactivity. This approach wouldn’t work if a user’s input dynamically changed the experience for the user. Think if Twitter acted like a static site, it wouldn’t be super interesting if everyone always saw the same tweets.
+
+## Conclusion
+
+Next.js proves the tools for developers to pick and choose the best rendering process for their projects.
+
+For a Single Page Application, developers would use a traditional React application and Client Side Rendering.
+
+For a blog, where each page has a different set of content and search engine optimization is important, it’s best to use Server Side Rendering.
+
+For a static personal portfolio website, Static Site Generation would be a great option, assuming there is little user interactivity.
+
+Finally, Next.js allows developers to use a hybrid approach between CSR, SSR, and SSG to fully optimize how users interact with an application.

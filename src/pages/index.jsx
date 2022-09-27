@@ -7,7 +7,6 @@ import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 import {
-  TwitterIcon,
   InstagramIcon,
   GitHubIcon,
   LinkedInIcon,
@@ -20,11 +19,9 @@ import image5 from '@/images/photos/image-5.jpg'
 import logoAirbnb from '@/images/logos/airbnb.svg'
 import logoFacebook from '@/images/logos/facebook.svg'
 import logoNoteFlick from '@/images/logos/noteflick.jpg'
-import logoPlanetaria from '@/images/logos/planetaria.svg'
 import logoWeWork from '@/images/logos/wework.jpg'
 import logoPwC from '@/images/logos/pwc.jpg'
 import logoSpotify from '@/images/logos/spotify.png'
-import logoStarbucks from '@/images/logos/starbucks.svg'
 import { generateRssFeed } from '@/lib/generateRssFeed'
 import { getAllArticles } from '@/lib/getAllArticles'
 import { formatDate } from '@/lib/formatDate'
@@ -175,6 +172,22 @@ function Resume() {
     },
   ]
 
+  // Function will execute on click of button
+  const onButtonClick = () => {
+    // using Java Script method to get PDF file
+    fetch('DerekVogtResume.pdf').then((response) => {
+      response.blob().then((blob) => {
+        // Creating new object of PDF file
+        const fileURL = window.URL.createObjectURL(blob)
+        // Setting various property values
+        let alink = document.createElement('a')
+        alink.href = fileURL
+        alink.download = 'DerekVogtResume.pdf'
+        alink.click()
+      })
+    })
+  }
+
   return (
     <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
@@ -222,40 +235,44 @@ function Resume() {
           </li>
         ))}
       </ol>
-      <Button href="#" variant="secondary" className="group mt-6 w-full">
-        Download CV
+      <Button
+        onClick={onButtonClick}
+        variant="secondary"
+        className="group mt-6 w-full"
+      >
+        Download Resume
         <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
       </Button>
     </div>
   )
 }
 
-function Photos() {
-  let rotations = ['rotate-2', '-rotate-2', 'rotate-2', 'rotate-2', '-rotate-2']
+// function Photos() {
+//   let rotations = ['rotate-2', '-rotate-2', 'rotate-2', 'rotate-2', '-rotate-2']
 
-  return (
-    <div className="mt-16 sm:mt-20">
-      <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
-          <div
-            key={image.src}
-            className={clsx(
-              'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
-              rotations[imageIndex % rotations.length]
-            )}
-          >
-            <Image
-              src={image}
-              alt=""
-              sizes="(min-width: 640px) 18rem, 11rem"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+//   return (
+//     <div className="mt-16 sm:mt-20">
+//       <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
+//         {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
+//           <div
+//             key={image.src}
+//             className={clsx(
+//               'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
+//               rotations[imageIndex % rotations.length]
+//             )}
+//           >
+//             <Image
+//               src={image}
+//               alt=""
+//               sizes="(min-width: 640px) 18rem, 11rem"
+//               className="absolute inset-0 h-full w-full object-cover"
+//             />
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   )
+// }
 
 export default function Home({ articles }) {
   return (
@@ -273,8 +290,11 @@ export default function Home({ articles }) {
             Software developer - Accounting professional in a past life.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Derek, a software developer and entrepreneur based in New York
-            City.
+            Entrepreneurial full-stack engineer and CPA with a background in
+            finance & accounting experienced in building applications with
+            Javascript & Python. Passionate about working with multiple
+            stakeholders and complex systems to deliver innovative solutions.
+            Recent Flatiron School Software Engineering graduate.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
@@ -295,7 +315,7 @@ export default function Home({ articles }) {
           </div>
         </div>
       </Container>
-      <Photos />
+      {/* <Photos /> */}
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">

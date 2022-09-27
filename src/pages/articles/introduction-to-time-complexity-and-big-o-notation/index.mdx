@@ -1,0 +1,108 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/future/image'
+import bigO from './bigO.png'
+
+export const meta = {
+  author: 'Derek Vogt',
+  date: '2022-06-27',
+  title: 'Introduction to Time Complexity and Big O notation',
+  description: 'content here',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+The dreaded coding interview…
+
+As a software engineer, at some point, you’ll need to take a coding challenge to land a job. To prepare me for this, I took the same approach as many others; I created a leetcode account and dove into some of the coding challenges. However, in my very first challenge (which was labeled as “easy”), contained the following sentence:
+
+### “Follow-up: Can you come up with an algorithm that is less than O(n²) time complexity?”
+
+O(n²) time complexity?!?!?!
+
+After all of those hours of studying Javascript syntax, I never encountered this kind of notation. Immediately, I needed to go back to the drawing board to understand what leetcode was asking for.
+
+Let’s break down what this sentence means and how it’s relevant to learning how to write efficient algorithms.
+
+## Time Complexity
+
+Time complexity is the number of operations an algorithm performs to complete its task. It’s the number of times the function needs to run in order to reach the desired outcome. For example, let’s look at the following function.
+
+```c
+let testArray = [1,2,3,4,5]
+
+function testAlgorithm(arr){
+  console.log(arr)
+}
+testAlgorithm(testArray)
+```
+
+In this example, an array is passed into a function, and then that array is console logged. It doesn’t matter how long the array is, the operation is only performed a single time. This means this algorithm, has a time complexity equal to 1.
+
+Let’s take a look at another function.
+
+```c
+let testArray = [1,2,3,4,5]
+
+function testAlgorithm(arr){
+  for (let i = 0; i<arr.length; i++){
+    console.log(arr[i])
+  }
+}
+testAlgorithm(arr)
+```
+
+In this example, an array is passed into a function, and for each item in the array, that item is console logged. This function will run 5 times, for each item in the array. Therefore, this algorithm has a time complexity equal to the number of items in the array, which is 5.
+
+Great! This all makes sense, but what was all of that O(n²) nonsense all about
+
+### Big O notation
+
+When measuring the time complexity of an algorithm, we can’t just use language such as “this algorithm has a time complexity equal to the number of items in the array.” Instead, we use Big O notation which looks like O(n) or O(n²). This expresses the time complexity of an algorithm in a more mathematical context.
+
+Here are a few examples of Big O notation:
+
+### O(1):
+
+Going back to our first example, no matter how large the input, the function will only run a single time. Therefore, the Big O notation would be O(1), with the 1 being the only time the algorithm ran. This is the most efficient algorithm since no matter how large the input, the algorithm will only run once.
+
+### O(n):
+
+In our second example, the algorithm ran each time for each element in the array. Therefore, there is a 1-to-1 relationship between the array length and the time complexity of the algorithm. The Big O notation would be O(n) in this case, with n being the length of the input. This is less efficient than O(1), but is predicable on how the algorithm can handle large data types. If the size of the input is 3, the algorithm will run 3 times, if the size of the input is 300, the algorithm will run 300 times.
+
+### O(n²):
+
+Another less efficient algorithm would have O(n²). Refer to the example below:
+
+```c
+let testArray= [1,2,3,4,5]
+
+function testAlgorithm(arr){
+  for (let i = 0; i<arr.length; i++){
+    for (let j = 0; j<arr.length; j++){
+      console.log(arr[j])
+    }
+  }
+}
+testAlgorithm(testArray)
+```
+
+The example above uses a nested for loop and console logs each element in the array, for every element in the array. This means if the array has 4 items, this algorithm will run 16 times (i.e. 4²). This can quickly get out of hand, if the array has 300 items, this algorithm will run 90,000 times!! An algorithm like this can grow massively inefficient and cause serious performance issues, especially when dealing with larger data types. That is why O(n²) algorithms should be avoided.
+
+### O(log n)
+
+A more efficient algorithm is the O(log n) algorithm, as the algorithm grows slowly in relation to the size of the input.
+
+Think of this algorithm as more of a divide and conquer approach. Using a more human example, imagine if you were looking through a phonebook to find the phone number of your friend, Doug. Using the log n approach, you would find a starting point about halfway through the phonebook and pick a random name, let’s say you land on Mark. You know that your friend, Doug, will be earlier in the phonebook than Mark, so you can discard all of the names after Mark. Again, you would pick another name halfway between the first name in the book, and Mark. By going through this process again and again until you land on Doug, you will save a lot more time than going through every name in the phonebook.
+
+<Image src={bigO} alt="" />
+The above illustration shows each of these algorithms types will grow in time complexity
+in relation to the input size. O(n²), is greatly inefficient and will grow to unscalable
+amounts rather quickly. O(n), grows in relation to input size and time, with a 1-to-1
+relationship. As this algorithm is more efficient than O(n²), there are still better
+options out there. Using the O(log n) approach can save a lot of computing time since
+the time complexity increases slowly in relation to the input size. A common approach
+to obtaining an O(log n) efficiency is using a binary search algorithm. Finally,
+the most efficient algorithm is O(1), where the input size does not affect the time
+complexity.
+
+Looking at Big O notation can be daunting at first, but once you have an understanding of the benefits of more efficient algorithms, you’ll be able to ace your leetcode interviews and land that dream job!

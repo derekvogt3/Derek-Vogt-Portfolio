@@ -1,0 +1,218 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/future/image'
+import connectFourOne from './connect-four-one.png'
+import connectFourTwo from './connect-four-two.png'
+
+export const meta = {
+  author: 'Derek Vogt',
+  date: '2022-08-10',
+  title: 'Building Connect Four in React',
+  description: 'My experience building Connect Four Logic using React.js',
+}
+
+export default (props) => <ArticleLayout meta={meta} {...props} />
+
+As a part of a project where we used React and Ruby to create a gaming website, I decided to include Connect Four as one of the options. Here is a summary of how I created Connect Four, including all of the game’s logic.
+
+For reference, the full repository for the project can be found at https://github.com/derekvogt3/connect-four
+
+## Step 1: Initial Board Setup
+
+For the board, I created a 2-dimensional array with 7 columns and 6 rows and set the initial state as empty strings. currentPlayercan be set to “X” or “O” to differentiate between the two players. The isWinner variable is initially set as false and updates once a win condition is met.
+
+```c
+export default function ConnectFour() {
+  const [board, setboard] = useState([
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""],
+  ]);
+  const [currentPlayer, setCurrentPlayer] = useState("X");
+  const [isWinner, setisWinner] = useState(false);
+
+  const fullBoard = board.map((row, rowIdx) => {
+    return row.map((val, colIdx) => {
+      return (
+        <ConnectFourSquare
+          key={colIdx + "" + rowIdx}
+          setboard={setboard}
+          colIdx={colIdx}
+          rowIdx={rowIdx}
+          currentPlayer={currentPlayer}
+          board={board}
+          setCurrentPlayer={setCurrentPlayer}
+          setisWinner={setisWinner}
+          isWinner={isWinner}
+        />
+      );
+    });
+  });
+
+  return (
+
+//jsx here... refer to full github page
+  );
+}
+```
+
+In order to create the UI for the full board, I created a grid of individual board components called `<ConnectFourSquare/>`. As CSS grids take in one-dimensional arrays, I needed to deconstruct the two-dimensional array, pass in component-specific row & column index references, and pass in any other information needed in the game logic. As each turn will be triggered by an “onClick” event on a component, the game logic for the game will exist in the individual components.
+
+I’m currently only focusing on the game logic, but feel free to dive into the user interface & jsx code at https://github.com/derekvogt3/connect-four
+
+## Step 2: Turn Logic
+
+The game logic is written in the individual Connect Four square components. See below for the full game logic, however, I will be breaking down each piece of code afterward.
+
+```c
+import React from "react";
+
+export default function ConnectFourSquare({
+  setboard,
+  rowIdx,
+  colIdx,
+  currentPlayer,
+  board,
+  setCurrentPlayer,
+  setisWinner,
+  isWinner,
+}) {
+  function handleOnClick() {
+    if (!isWinner) {
+      turn();
+    }
+  }
+
+  function checkWinner(row, col, board) {
+    let counter = 1;
+    let checkArray = [
+      [-1, -1],
+      [0, -1],
+      [1, -1],
+      [1, 0],
+    ];
+
+    checkArray.forEach((val) => {
+      initialWinCheck(counter, row, col, val[0], val[1], board);
+    });
+  }
+
+  function initialWinCheck(
+    counter,
+    row,
+    col,
+    checkArrayRow,
+    checkArrayCol,
+    board
+  ) {
+    let secondCounter = 1;
+    if (counter === 4) {
+      setisWinner(true);
+    }
+
+    let newRow = row + checkArrayRow;
+    let newCol = col + checkArrayCol;
+
+    if (newRow >= 0 && newRow < 6 && newCol >= 0 && newCol < 7) {
+      if (board[newRow][newCol] === currentPlayer) {
+        counter += 1;
+        initialWinCheck(
+          counter,
+          newRow,
+          newCol,
+          checkArrayRow,
+          checkArrayCol,
+          board
+        );
+      } else {
+        secondaryWinCheck(
+          secondCounter,
+          row,
+          col,
+          checkArrayRow,
+          checkArrayCol,
+          board
+        );
+      }
+    }
+  }
+
+  function secondaryWinCheck(
+    counter,
+    row,
+    col,
+    checkArrayRow,
+    checkArrayCol,
+    board
+  ) {
+    if (counter === 4) {
+      setisWinner(true);
+    }
+
+    let newRow = row - checkArrayRow;
+    let newCol = col - checkArrayCol;
+
+    if (newRow >= 0 && newRow < 6 && newCol >= 0 && newCol < 7) {
+      if (board[newRow][newCol] === currentPlayer) {
+        counter += 1;
+        secondaryWinCheck(
+          counter,
+          newRow,
+          newCol,
+          checkArrayRow,
+          checkArrayCol,
+          board
+        );
+      }
+    }
+  }
+
+  function turn() {
+    let tempBoard = [...board];
+    for (let i = 5; i >= 0; --i) {
+      if (board[i][colIdx] === "") {
+        tempBoard[i][colIdx] = currentPlayer;
+        setboard(tempBoard);
+
+        if (currentPlayer === "X") {
+          setCurrentPlayer("O");
+        } else {
+          setCurrentPlayer("X");
+        }
+        checkWinner(i, colIdx, tempBoard);
+
+        return;
+      }
+    }
+  }
+
+  return (
+   //jsx here ...
+  );
+}
+```
+
+First, let’s look at the turn() function. In Connect Four, when a game piece is dropped into the board, it falls to the bottom of the board. Therefore, instead of placing a game piece at the row and column index of the board, we iterate through each row, starting at the bottom, until there is a blank space. We then change the blank space to the current player and then make it the other player's turn.
+
+However, before progressing to the next turn, we need to check if there is a winner.
+
+## Step 3: Win Condition
+
+In a game like tic-tac-toe, there are only 8 potential win combinations. This makes it easy to hardcode each potential win condition. In Connect Four, however, a more efficient algorithm is necessary.
+
+In my win algorithm, the checkWinner() function performs a series of checks for each vertical, diagonal, and horizontal possibility. The algorithm takes in the position of the most currently played piece and checks if the surrounding pieces are from the current player.
+
+<Image src={connectFourOne} alt="" />
+
+As seen in the image above, the piece highlighted in yellow is the most recently played piece. The algorithm checks if the piece to the top left is equal to the current piece, and will continue to check by subtracting 1 to both the row and column index. This function will then call upon itself, check the top left piece, and then stop once the end is met. Then, in order to ensure there were no pieces to the bottom right of the initial piece, a second recursive function is called to perform the check, starting from the most recently checked piece.
+
+<Image src={connectFourTwo} alt="" />
+As seen in the image above, the same check initially performed is run in the opposite
+direction. Since the algorithm will count a total of 4 consecutive pieces, it will
+return the winner as the current player.
+
+Review the code in the snippet above, starting with the checkWinner() function as well as the initialWinCheck() and secondaryWinCheck() functions.
+
+I recognize there could’ve been less of an over-engineered solution to this problem, however, I used this as a fun way to practice functions that use recursion on multiple layers.
