@@ -3,12 +3,9 @@ import Head from 'next/head'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import logoAnimaginary from '@/images/logos/animaginary.svg'
-import logoCosmos from '@/images/logos/cosmos.svg'
-import logoHelioStream from '@/images/logos/helio-stream.svg'
-import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
-import logoPlanetaria from '@/images/logos/planetaria.svg'
 import logoSwizzle from '@/images/logos/swizzle.png'
+import logoTDGames from '@/images/logos/tdgames.png'
+import logoRollCall from '@/images/logos/rollcall.png'
 
 const projects = [
   {
@@ -26,14 +23,14 @@ const projects = [
     description:
       'An app that allows users to initiate roll-calls where users take selfies identifying their locations',
     link: { href: '#', label: 'github.com' },
-    logo: logoHelioStream,
+    logo: logoRollCall,
   },
   {
     name: 'TD Games',
     description:
       'A gaming application where users can friend, chat, and play board games together in real-time',
     link: { href: '#', label: 'github.com' },
-    logo: logoCosmos,
+    logo: logoTDGames,
   },
 ]
 
