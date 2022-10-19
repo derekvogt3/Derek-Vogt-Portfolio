@@ -10,7 +10,7 @@ import {
   GitHubIcon,
   LinkedInIcon,
 } from '@/components/SocialIcons'
-import portraitImage from '@/images/portrait.jpg'
+import portraitImage from '@/images/portrait.png'
 
 function SocialLink({ className, href, children, icon: Icon }) {
   return (
@@ -41,7 +41,7 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>About - Spencer Sharp</title>
+        <title>About - Derek Vogt</title>
         <meta
           name="description"
           content="I’m Spencer Sharp. I live in New York City, where I design the future."
@@ -61,46 +61,35 @@ export default function About() {
           </div>
           <div className="lg:order-first lg:row-span-2">
             <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-              I’m Spencer Sharp. I live in New York City, where I design the
-              future.
+              I’m Derek Vogt. I love tinkering with technology.
             </h1>
             <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
               <p>
-                I’ve loved making things for as long as I can remember, and
-                wrote my first program when I was 6 years old, just two weeks
-                after my mom brought home the brand new Macintosh LC 550 that I
-                taught myself to type on.
+                In August of 2021, I took a leap of faith — quitting a safe and
+                stable accounting job, leaving New York City, and devoting all
+                of my time and effort to learn computer programming.
+              </p>
+              <p>Why did I do this?</p>
+              <p>
+                After 5 years of climbing the traditional finance/accounting
+                corporate ladder, I found myself traveling a path I wasn’t truly
+                passionate about. It was a safe path, one where I rarely needed
+                to leave my comfort zone, but life is too short and
+                unpredictable to always take the safe path. Especially when
+                looking at the current state of the world in 2022, there are
+                just too many things outside of our control.
               </p>
               <p>
-                The only thing I loved more than computers as a kid was space.
-                When I was 8, I climbed the 40-foot oak tree at the back of our
-                yard while wearing my older sister’s motorcycle helmet, counted
-                down from three, and jumped — hoping the tree was tall enough
-                that with just a bit of momentum I’d be able to get to orbit.
-              </p>
-              <p>
-                I spent the next few summers indoors working on a rocket design,
-                while I recovered from the multiple surgeries it took to fix my
-                badly broken legs. It took nine iterations, but when I was 15 I
-                sent my dad’s Blackberry into orbit and was able to transmit a
-                photo back down to our family computer from space.
-              </p>
-              <p>
-                Today, I’m the founder of Planetaria, where we’re working on
-                civilian space suits and manned shuttle kits you can assemble at
-                home so that the next generation of kids really <em>can</em>{' '}
-                make it to orbit — from the comfort of their own backyards.
+                I just recently finished my studies at the Flatiron School,
+                where I learned the fundamentals of web development, using
+                frameworks such as React & Django. I’ve built multiple projects
+                I’m proud of, including a public beta launch of NoteFlick –
+                personalized video messaging cards.
               </p>
             </div>
           </div>
           <div className="lg:pl-20">
             <ul role="list">
-              <SocialLink href="#" icon={TwitterIcon}>
-                Follow on Twitter
-              </SocialLink>
-              <SocialLink href="#" icon={InstagramIcon} className="mt-4">
-                Follow on Instagram
-              </SocialLink>
               <SocialLink href="#" icon={GitHubIcon} className="mt-4">
                 Follow on GitHub
               </SocialLink>
@@ -108,11 +97,11 @@ export default function About() {
                 Follow on LinkedIn
               </SocialLink>
               <SocialLink
-                href="mailto:spencer@planetaria.tech"
+                href="mailto:derekvogt3@gmail.com"
                 icon={MailIcon}
                 className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
               >
-                spencer@planetaria.tech
+                derekvogt3@gmail.com
               </SocialLink>
             </ul>
           </div>
