@@ -1,6 +1,5 @@
 import Image from 'next/future/image'
 import Head from 'next/head'
-
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import logoSwizzle from '@/images/logos/swizzle.png'
@@ -19,18 +18,24 @@ const projects = [
     logo: logoSwizzle,
   },
   {
-    name: 'Roll-Call',
-    description:
-      'An app that allows users to initiate roll-calls where users take selfies identifying their locations',
-    link: { href: '#', label: 'github.com' },
-    logo: logoRollCall,
-  },
-  {
     name: 'TD Games',
     description:
       'A gaming application where users can friend, chat, and play board games together in real-time',
-    link: { href: '#', label: 'github.com' },
+    link: {
+      href: 'https://github.com/derekvogt3/td-games-frontend',
+      label: 'github.com',
+    },
     logo: logoTDGames,
+  },
+  {
+    name: 'Roll-Call',
+    description:
+      'An app that allows users to initiate roll-calls where users take selfies identifying their locations',
+    link: {
+      href: 'https://github.com/derekvogt3/roll-call',
+      label: 'github.com',
+    },
+    logo: logoRollCall,
   },
 ]
 
